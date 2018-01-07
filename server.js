@@ -23,7 +23,7 @@ app.engine("handlebars", exphbs());
 app.set("view engine", "handlebars");
 
 // Routes
-var routes = require("./routes/routes.js")(request);
+var routes = require("./routes/routes.js")(app, request);
 
 // Start the server
 app.listen(PORT, function() {
