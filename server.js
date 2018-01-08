@@ -2,11 +2,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var exphbs = require("express-handlebars");
 var request = require("request");
-var cheerio = require("cheerio");
-
-// Models
-var db = require("./models");
 
 // Port
 var PORT = 3000;
@@ -14,12 +11,20 @@ var PORT = 3000;
 // Initialize Express
 var app = express();
 
+// Set mongoose to leverage built in JavaScript ES6 Promises
+mongoose.Promise = Promise;
+
+// Connect to the Mongo DB
+mongoose.connect("mongodb://localhost/stereogum-scraper", {
+  useMongoClient: true
+});
+
 // Configure middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
 // Handlebars
-app.engine("handlebars", exphbs());
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Routes

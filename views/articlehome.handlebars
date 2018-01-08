@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Stereogum Scraper</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <span class="navbar-text" id="scrape-button">Scrape</span>
+            </li>
+        </ul>
+        <span class="navbar-text">
+					Music News
+    			</span>
+    </div>
+</nav>
+<div class="container">
+    {{#each article}} {{> article}} {{/each}}
+     <div class="modal" id="leaveCommentModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Leave a comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="commentTitle">Title</label>
+                        <input class="form-control" id="commentTitle" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="commentBody">Comment</label>
+                        <textarea class="form-control" id="commentBody" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="commentSubmit" data-dismiss="modal" data-id="{{_id}}">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="viewCommentModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">View comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body commentModalBody">
+                    <h5 id="viewCommentTitle"></h5>
+                    <p id="viewCommentBody"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
