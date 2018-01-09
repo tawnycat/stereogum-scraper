@@ -12,12 +12,11 @@ exports.loadArticles = function(req, res) {
     console.log("loading home page");
     db.Article
         .find({})
+        .limit(10)
+        .sort({date: -1})
         .then(function(dbArticle) {
             console.log(dbArticle);
-            // var hbsObject = {
-            //     article: dbArticle
-            // };
-            res.render("articlehome", {article: dbArticle});
+            res.render("articlehome", { article: dbArticle });
         })
         .catch(function(err) {
             res.json(err);
@@ -42,14 +41,24 @@ exports.scrape = function(req, res) {
             result.link = $(element).find("a").attr("href");
             result.preview = $(element).find(".preview").text();
 
+            var possibleMatch;
+
             db.Article
-                .create(result)
+                .find({ link: result.link })
                 .then(function(dbArticle) {
-                    console.log("scrape complete");
+                        if (dbArticle.length === 0) {
+                            db.Article
+                                .create(result)
+                                .then(function(dbArticle) {
+                                    console.log("scrape complete");
+                                })
+                                .catch(function(err) {
+                                    res.json(err);
+                                });
+                        } else {
+                            return;
+                        }
                 })
-                .catch(function(err) {
-                    res.json(err);
-                });
         });
     });
 }
@@ -77,7 +86,7 @@ exports.addComments = function(req, res) {
     db.Comment
         .create(req.body)
         .then(function(dbComment) {
-                        console.log("comment is in the database");
+            console.log("comment is in the database");
             return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
 
         })

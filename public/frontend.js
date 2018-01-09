@@ -29,7 +29,7 @@ $(document).ready(function() {
                 method: "GET",
                 url: "/articles/" + thisId
             })
-            // With that done, add the note information to the page
+
             .then(function(data) {
                 console.log(data);
                 $("#viewCommentTitle").text(data.title);
@@ -40,9 +40,10 @@ $(document).ready(function() {
             });
     });
 
-    // When you click the savenote button
+    // "Leave comment" modal
+
     $(".leaveComment").on("click", function() {
-        // Grab the id associated with the article from the submit button
+
         var thisId = $(this).attr("data-id");
         $("#leaveCommentModal").attr("data-id", thisId);
         $("#leaveCommentModal").modal({
@@ -50,8 +51,9 @@ $(document).ready(function() {
         });
     });
 
+    // Submit comment
+
     $("#commentSubmit").on("click", function() {
-        // Run a POST request to change the note, using what's entered in the inputs
 
         var thisId = $("#leaveCommentModal").attr("data-id");
 
@@ -59,20 +61,19 @@ $(document).ready(function() {
                 method: "POST",
                 url: "/articles/" + thisId,
                 data: {
-                    // Value taken from title input
+
                     title: $("#commentTitle").val(),
-                    // Value taken from note textarea
+
                     body: $("#commentBody").val()
                 }
             })
-            // With that done
+
             .then(function(data) {
-                // Log the response
+
                 console.log(data);
-                // Empty the notes section
+
             });
 
-        // Also, remove the values entered in the input and textarea for note entry
         $("#commentTitle").val("");
         $("#commentBody").val("");
     })
