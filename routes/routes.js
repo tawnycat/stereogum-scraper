@@ -18,4 +18,4 @@ app.get("/articles/:id", controller.grabComments);
 
 app.post("/articles/:id", controller.addComments);
 
-};
+}
