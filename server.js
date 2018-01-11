@@ -6,7 +6,7 @@ var exphbs = require("express-handlebars");
 var request = require("request");
 
 // Port
-//var PORT = 3000;
+var port = process.env.PORT || 3000;
 
 // Initialize Express
 var app = express();
@@ -33,6 +33,6 @@ app.set("view engine", "handlebars");
 var routes = require("./routes/routes.js")(app, request);
 
 // Start the server
-app.listen(MONGODB_URI, function() {
-  console.log("App running on port " + MONGODB_URI + "!");
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT + "!");
 });
